@@ -1,0 +1,44 @@
+{
+  "name": "dynamodbdown",
+  "description": "A LevelDOWN API implementation on Amazon DynamoDB",
+  "main": "index.js",
+  "scripts": {
+    "lint": "standard",
+    "test": "npm run lint && tape test | tap-spec"
+  },
+  "author": "Klaus Trainer <klaus_trainer@apache.org>",
+  "license": "Apache-2.0",
+  "keywords": [
+    "aws",
+    "database",
+    "db",
+    "dynamo",
+    "dynamodb",
+    "storage",
+    "store",
+    "level",
+    "leveldb",
+    "levelup",
+    "leveldown"
+  ],
+  "dependencies": {
+    "aws-sdk": "^2.6.4",
+    "abstract-leveldown": "^2.6.1",
+    "through2": "^2.0.1",
+    "async": "^2.0.1"
+  },
+  "devDependencies": {
+    "dynalite": "^1.0.3",
+    "levelup": "^1.3.2",
+    "standard": "^8.1.0",
+    "tap-spec": "^4.1.1",
+    "tape": "^4.6.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KlausTrainer/dynamodbdown.git"
+  },
+  "release": {
+    "branch": "main"
+  }
+}
