@@ -48,7 +48,7 @@ read stream closed
 
 ### Table Creation ###
 
-If the table doesn't exist, DynamoDOWN will try to create a table for you. You can specify the read/write throughput. If not specified, it will default to 1/1. If the table already exists, the specified throughput will have no effect. Throughput can be changed for tables that already exist by using the DynamoDB API or the AWS Console.
+If the table doesn't exist, DynamoDBDOWN will try to create a table. You can specify the read/write throughput. If not specified, it will default to `1/1`. If the table already exists, the specified throughput will have no effect. Throughput can be changed for tables that already exist by using the DynamoDB API or the AWS Console.
 
 See [LevelUP options](https://github.com/level/levelup#options) for more information.
 
@@ -78,9 +78,9 @@ const db = levelup('tableName', options)
 
 ### Hash Keys ###
 
-In DynamoDB, keys consist of two parts: a *hash key* and a *range key*. To achieve LevelDB-like behavior, all keys in a database instance are given the same hash key. That means that you can't do range queries over keys with different hash keys.
+In DynamoDB, keys consist of two parts: a *hash key* and a *range key*. To achieve LevelDB-like behaviour, all keys in a database instance are given the same hash key. That means that you can't do range queries over keys with different hash keys.
 
-The default hash key is `!`. You can specify it by putting a `/` (forward slash) character in the `location` argument, which separates the table name from the hash key.
+The default hash key is `!`. You can specify it by putting a `/` in the `location` argument. The `/` separates the table name from the hash key.
 
 ### Example ###
 
