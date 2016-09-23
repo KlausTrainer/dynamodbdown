@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "lint": "standard",
-    "test": "npm run lint && tape test | tap-spec"
+    "test": "npm run lint && tape test | tap-spec",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "author": "Klaus Trainer <klaus_trainer@apache.org>",
   "license": "Apache-2.0",
@@ -32,7 +33,8 @@
     "levelup": "^1.3.2",
     "standard": "^8.1.0",
     "tap-spec": "^4.1.1",
-    "tape": "^4.6.0"
+    "tape": "^4.6.0",
+    "semantic-release": "^4.3.5"
   },
   "repository": {
     "type": "git",
