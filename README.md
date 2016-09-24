@@ -23,7 +23,7 @@ const dynamoDBOptions = {
 }
 
 const options = {
-  db: location => new DynamoDBDOWN(location),
+  db: DynamoDBDOWN,
   dynamodb: dynamoDBOptions // required AWS configuration
 }
 
@@ -69,7 +69,7 @@ const dynamoDBOptions = {
 }
 
 const options = {
-  db: location => new DynamoDBDOWN(location),
+  db: location => DynamoDBDOWN,
   dynamodb: dynamoDBOptions // required AWS configuration
 }
 
@@ -80,7 +80,7 @@ const db = levelup('tableName', options)
 
 In DynamoDB, keys consist of two parts: a *hash key* and a *range key*. To achieve LevelDB-like behaviour, all keys in a database instance are given the same hash key. That means that you can't do range queries over keys with different hash keys.
 
-The default hash key is `!`. You can specify it by putting a `/` in the `location` argument. The `/` separates the table name from the hash key.
+The default hash key is `!`. You can specify it by putting a `$` in the `location` argument. The `$` separates the table name from the hash key.
 
 ### Example ###
 
@@ -95,7 +95,7 @@ const dynamoDBOptions = {
 }
 
 const options = {
-  db: location => new DynamoDBDOWN(location),
+  db: DynamoDBDOWN,
   dynamodb: dynamoDBOptions // required AWS configuration
 }
 

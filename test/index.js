@@ -139,7 +139,7 @@ test('levelup', t => {
   t.test('setup', t => {
     startDbServer(newServer => {
       server = newServer
-      db = levelup('foobase', {db: location => new DynamoDBDOWN(location), dynamodb: dynamodbOptions})
+      db = levelup('foobase', {db: DynamoDBDOWN, dynamodb: dynamodbOptions})
       t.end()
     })
   })
