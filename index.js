@@ -28,6 +28,16 @@ function DynamoDBDOWN (location) {
 
 inherits(DynamoDBDOWN, AbstractLevelDOWN)
 
+function hexEncodeTableName (str) {
+  var hex = ''
+
+  for (var pos = 0; pos < str.length; pos++) {
+    hex += String(str.charCodeAt(pos).toString(16))
+  }
+
+  return hex
+}
+
 DynamoDBDOWN.prototype._open = function (options, cb) {
   if (!options.dynamodb) {
     return cb(new Error('`open` requires `options` argument with "dynamodb" key'))
@@ -37,7 +47,13 @@ DynamoDBDOWN.prototype._open = function (options, cb) {
     this.tableName = this.tableName.replace(options.prefix, '')
   }
 
-  const dynamodbOptions = Object.assign({tableName: this.tableName}, options.dynamodb)
+  if (options.dynamodb.hexEncodeTableName === true) {
+    this.encodedTableName = hexEncodeTableName(this.tableName)
+  } else {
+    this.encodedTableName = this.tableName
+  }
+
+  const dynamodbOptions = Object.assign({tableName: this.encodedTableName}, options.dynamodb)
 
   this.dynamoDb = new AWS.DynamoDB(dynamodbOptions)
 
@@ -64,7 +80,7 @@ DynamoDBDOWN.prototype._close = function (cb) {
 
 DynamoDBDOWN.prototype._put = function (key, value, options, cb) {
   const params = {
-    TableName: this.tableName,
+    TableName: this.encodedTableName,
     Item: {
       hkey: {S: this.hashKey.toString()},
       rkey: {S: key.toString()},
@@ -77,7 +93,7 @@ DynamoDBDOWN.prototype._put = function (key, value, options, cb) {
 
 DynamoDBDOWN.prototype._get = function (key, options, cb) {
   const params = {
-    TableName: this.tableName,
+    TableName: this.encodedTableName,
     Key: {
       hkey: {S: this.hashKey.toString()},
       rkey: {S: key.toString()}
@@ -99,7 +115,7 @@ DynamoDBDOWN.prototype._get = function (key, options, cb) {
 
 DynamoDBDOWN.prototype._del = function (key, options, cb) {
   const params = {
-    TableName: this.tableName,
+    TableName: this.encodedTableName,
     Key: {
       hkey: {S: this.hashKey.toString()},
       rkey: {S: key.toString()}
@@ -172,8 +188,8 @@ DynamoDBDOWN.prototype._batch = function (array, options, cb) {
 
     const reqs = []
 
-    if (data && data.UnprocessedItems && data.UnprocessedItems[this.tableName]) {
-      reqs.push.apply(reqs, data.UnprocessedItems[this.tableName])
+    if (data && data.UnprocessedItems && data.UnprocessedItems[this.encodedTableName]) {
+      reqs.push.apply(reqs, data.UnprocessedItems[this.encodedTableName])
     }
 
     reqs.push.apply(reqs, ops.splice(0, 25 - reqs.length))
@@ -182,7 +198,7 @@ DynamoDBDOWN.prototype._batch = function (array, options, cb) {
       return cb()
     }
 
-    params.RequestItems[this.tableName] = reqs
+    params.RequestItems[this.encodedTableName] = reqs
     this.dynamoDb.batchWriteItem(params, loop)
   }
 
@@ -195,7 +211,7 @@ DynamoDBDOWN.prototype._iterator = function (options) {
 
 DynamoDBDOWN.prototype.createTable = function (opts, cb) {
   const params = {
-    TableName: this.tableName,
+    TableName: this.encodedTableName,
     AttributeDefinitions: [
       {AttributeName: 'hkey', AttributeType: 'S'},
       {AttributeName: 'rkey', AttributeType: 'S'}
@@ -218,7 +234,7 @@ DynamoDBDOWN.destroy = function (name, callback) {
   const store = globalStore[name]
 
   if (store) {
-    store.dynamoDb.deleteTable({TableName: store.tableName}, (err, data) => {
+    store.dynamoDb.deleteTable({TableName: store.encodedTableName}, (err, data) => {
       if (err) {
         callback()
       } else {

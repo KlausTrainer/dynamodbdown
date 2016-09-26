@@ -139,7 +139,7 @@ DynamoDBIterator.prototype.getRange = function (opts, cb) {
   const rkey = createRKey(opts)
 
   const params = {
-    TableName: this.db.tableName,
+    TableName: this.db.encodedTableName,
     KeyConditions: {
       hkey: {
         ComparisonOperator: 'EQ',
