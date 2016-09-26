@@ -113,6 +113,10 @@ db.put('some key', 'some value', => err {
 
 If you are fine with sharing capacity units across multiple database instances or applications, you can reuse a table by specifying the same table name, but different hash keys.
 
+## Changelog ##
+
+See [here](https://github.com/KlausTrainer/dynamodbdown/releases).
+
 ## LICENSE ##
 
 Copyright 2016 Klaus Trainer
