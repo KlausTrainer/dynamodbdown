@@ -135,7 +135,7 @@ const options = {
   dynamodb: dynamoDBOptions // required AWS configuration
 }
 
-const db = levelup('tableName', options) // the DynaoDB table name will
+const db = levelup('tableName', options) // the DynamoDB table name will
                                          // be '7461626c654e616d65'
 ```
 
