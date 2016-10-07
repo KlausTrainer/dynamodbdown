@@ -80,7 +80,12 @@ DynamoDBIterator.prototype.createReadStream = function (opts) {
 
   const onData = (err, data) => {
     if (err) {
-      return stream.emit('error', err)
+      if (err.code === 'ResourceNotFoundException') {
+        stream.end()
+      } else {
+        stream.emit('error', err)
+      }
+      return stream
     }
 
     data.Items.forEach((item) => {
