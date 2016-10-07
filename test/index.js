@@ -16,9 +16,9 @@ const dynamodbOptions = {
 
 const startDbServer = (cb) => {
   const server = dynalite({
-    createTableMs: 0,
-    deleteTableMs: 0,
-    updateTableMs: 0
+    createTableMs: 20,
+    deleteTableMs: 20,
+    updateTableMs: 20
   })
 
   server.listen((err) => {
