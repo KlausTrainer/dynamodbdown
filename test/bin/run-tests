@@ -7,4 +7,4 @@ cp test/node_modules/aws-sdk/apis/dynamodb-2012-08-10.waiters2.json node_modules
 $NPM_BIN_DIR/tape test | $NPM_BIN_DIR/tap-spec
 status=$?
 cp test/node_modules/aws-sdk/apis/dynamodb-2012-08-10.waiters2.json.orig node_modules/aws-sdk/apis/dynamodb-2012-08-10.waiters2.json
-return $status
+exit $status
