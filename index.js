@@ -77,10 +77,6 @@ DynamoDBDOWN.prototype._open = function (options, cb) {
   }
 }
 
-DynamoDBDOWN.prototype._close = function (cb) {
-  cb()
-}
-
 DynamoDBDOWN.prototype._put = function (key, value, options, cb) {
   const params = {
     TableName: this.encodedTableName,
