@@ -14,7 +14,7 @@ function DynamoDBIterator (db, options) {
   this.db = db
   this.dynamoDb = db.dynamoDb
   this._results = this.createReadStream(options)
-  this._results.on('end', () => {
+  this._results.once('end', () => {
     this._endEmitted = true
   })
 }
