@@ -81,7 +81,7 @@ DynamoDBDOWN.prototype._put = function (key, value, options, cb) {
   const params = {
     TableName: this.encodedTableName,
     Item: {
-      hkey: {S: this.hashKey.toString()},
+      hkey: {S: this.hashKey},
       rkey: {S: key.toString()},
       value: serialize(value, options.asBuffer)
     }
@@ -94,7 +94,7 @@ DynamoDBDOWN.prototype._get = function (key, options, cb) {
   const params = {
     TableName: this.encodedTableName,
     Key: {
-      hkey: {S: this.hashKey.toString()},
+      hkey: {S: this.hashKey},
       rkey: {S: key.toString()}
     }
   }
@@ -114,7 +114,7 @@ DynamoDBDOWN.prototype._del = function (key, options, cb) {
   const params = {
     TableName: this.encodedTableName,
     Key: {
-      hkey: {S: this.hashKey.toString()},
+      hkey: {S: this.hashKey},
       rkey: {S: key.toString()}
     }
   }
@@ -150,7 +150,7 @@ DynamoDBDOWN.prototype._batch = function (array, options, cb) {
       op = {
         DeleteRequest: {
           Key: {
-            hkey: {S: this.hashKey.toString()},
+            hkey: {S: this.hashKey},
             rkey: {S: item.key.toString()}
           }
         }
@@ -159,7 +159,7 @@ DynamoDBDOWN.prototype._batch = function (array, options, cb) {
       op = {
         PutRequest: {
           Item: {
-            hkey: {S: this.hashKey.toString()},
+            hkey: {S: this.hashKey},
             rkey: {S: item.key.toString()},
             value: serialize(item.value, options.asBuffer)
           }
