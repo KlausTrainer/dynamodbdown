@@ -91,8 +91,8 @@ DynamoDBIterator.prototype.createReadStream = function (opts) {
     data.Items.forEach((item) => {
       var filtered = false
 
-      if (opts.gt && !(item.rkey.S > opts.gt) ||
-          opts.lt && !(item.rkey.S < opts.lt)) {
+      if ((opts.gt && !(item.rkey.S > opts.gt)) ||
+          (opts.lt && !(item.rkey.S < opts.lt))) {
         filtered = true
       }
 

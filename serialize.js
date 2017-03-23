@@ -2,7 +2,7 @@ module.exports = function serialize (value, asBuffer) {
   if (value === null ||
       value === undefined ||
       value === '' ||
-      Buffer.isBuffer(value) && value.length === 0) {
+      (Buffer.isBuffer(value) && value.length === 0)) {
     return {NULL: true}
   }
 

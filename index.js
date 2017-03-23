@@ -67,7 +67,7 @@ DynamoDBDOWN.prototype._open = function (options, cb) {
     }, (err, data) => {
       const exists = err && (err.code === 'ResourceInUseException')
 
-      if (options.errorIfExists && exists || err && !exists) {
+      if ((options.errorIfExists && exists) || (err && !exists)) {
         cb(err)
       } else {
         cb(null, this)
@@ -134,8 +134,8 @@ DynamoDBDOWN.prototype._batch = function (array, options, cb) {
       // batch request, as DynamoDB won't accept those. That's why we only
       // retain the last operation here.
       const idx = ops.findIndex(someItem => {
-        return someItem.DeleteRequest && someItem.DeleteRequest.Key.rkey.S === item.key ||
-          someItem.PutRequest && someItem.PutRequest.Item.rkey.S === item.key
+        return (someItem.DeleteRequest && someItem.DeleteRequest.Key.rkey.S === item.key) ||
+          (someItem.PutRequest && someItem.PutRequest.Item.rkey.S === item.key)
       })
 
       if (idx !== -1) {
