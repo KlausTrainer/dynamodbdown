@@ -8,6 +8,7 @@ const deserialize = require('./deserialize')
 const DynamoDBIterator = require('./iterator')
 
 const MAX_BATCH_SIZE = 25
+const RESOURCE_WAITER_DELAY = 1
 
 const globalStore = {}
 
@@ -223,7 +224,10 @@ DynamoDBDOWN.prototype.createTable = function (opts, cb) {
     if (err) {
       cb(err)
     } else {
-      this.dynamoDb.waitFor('tableExists', {TableName: this.encodedTableName}, cb)
+      this.dynamoDb.waitFor(
+        'tableExists',
+        {TableName: this.encodedTableName, $waiter: {delay: RESOURCE_WAITER_DELAY}},
+        cb)
     }
   })
 }
@@ -239,14 +243,18 @@ DynamoDBDOWN.destroy = function (name, cb) {
       } else if (err) {
         cb(err)
       } else {
-        store.dynamoDb.waitFor('tableNotExists', {TableName: store.encodedTableName}, (err, data) => {
-          if (err) {
-            cb(err)
-          } else {
-            delete globalStore[name]
-            cb()
+        store.dynamoDb.waitFor(
+          'tableNotExists',
+          {TableName: store.encodedTableName, $waiter: {delay: RESOURCE_WAITER_DELAY}},
+          (err, data) => {
+            if (err) {
+              cb(err)
+            } else {
+              delete globalStore[name]
+              cb()
+            }
           }
-        })
+        )
       }
     })
   } else {

@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "standard",
-    "test": "npm run lint && test/bin/run-tests",
+    "test": "npm run lint && tape test | tap-spec",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "author": "Klaus Trainer <klaus_trainer@apache.org>",
@@ -23,7 +23,7 @@
     "leveldown"
   ],
   "dependencies": {
-    "aws-sdk": "^2.6.7",
+    "aws-sdk": "^2.31.0",
     "abstract-leveldown": "^2.6.1",
     "through2": "^2.0.1"
   },
