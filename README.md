@@ -143,6 +143,13 @@ const db = levelup('tableName', options) // the DynamoDB table name will
 
 See [here](https://github.com/KlausTrainer/dynamodbdown/releases).
 
+## Acknowledgments ##
+
+DynamoDBDOWN has been heavily inspired by:
+
+* [DynamoDOWN](https://github.com/davidguttman/dynamodown) by David Guttman
+* [dynamo-down](https://github.com/jed/dynamo-down) by Jed Schmidt.
+
 ## LICENSE ##
 
 Copyright 2016 Klaus Trainer
